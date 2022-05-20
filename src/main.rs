@@ -1,20 +1,16 @@
 extern crate dotenv;
 use actix_web::{middleware::Logger, web, App, HttpServer};
-use dotenv::dotenv;
 use std::{env, net::SocketAddr};
 
+mod config;
 mod handlers;
-mod models;
+use config::get_config;
 use handlers::{application_page_handler, fallback_handler};
-use models::AppConfig;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-  dotenv().expect("Failed to read .env file");
   env_logger::init_from_env(env_logger::Env::new().default_filter_or("info"));
-  let app_config = envy::prefixed("APP_")
-    .from_env::<AppConfig>()
-    .expect("Please provide port, host and workers values");
+  let app_config = get_config();
   let address = SocketAddr::from(([127, 0, 0, 1], get_server_port()));
   let log_message = format!(
     "starting {} server at http://{}",
@@ -37,5 +33,5 @@ fn get_server_port() -> u16 {
   env::var("APP_PORT")
     .ok()
     .and_then(|port| port.parse().ok())
-    .unwrap_or_else(|| 8186)
+    .unwrap_or_else(|| 8080)
 }
