@@ -17,8 +17,8 @@ async fn main() -> std::io::Result<()> {
     .expect("Please provide port, host and workers values");
   let address = SocketAddr::from(([127, 0, 0, 1], get_server_port()));
   let log_message = format!(
-    "starting {} server at http://{}:{}",
-    app_config.application_name, address, app_config.port
+    "starting {} server at http://{}",
+    app_config.application_name, address
   );
   log::info!("{}", log_message);
   HttpServer::new(|| {
