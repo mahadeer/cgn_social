@@ -34,8 +34,8 @@ RUN cargo build --target x86_64-unknown-linux-musl --release
 FROM node:14-alpine AS builder2
 WORKDIR /cgn-social/web
 COPY ./web/package.json ./
+RUN yarn install
 COPY ./web/yarn.lock ./
-RUN yarn install --frozen-lockfile
 COPY ./web .
 RUN yarn build
 
