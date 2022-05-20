@@ -31,7 +31,7 @@ RUN cargo build --target x86_64-unknown-linux-musl --release
 ## FrontEnd React Builder
 ####################################################################################################
 
-FROM node:14-alpine AS builder
+FROM node:14-alpine
 WORKDIR /cgn-social/web
 COPY package.json ./
 COPY yarn.lock ./
